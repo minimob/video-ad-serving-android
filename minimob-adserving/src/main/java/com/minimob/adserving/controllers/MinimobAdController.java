@@ -23,7 +23,6 @@ public class MinimobAdController {
     private final Map<Integer, AdZone> _dictionary;
     private Integer _originalOrientation;
     private boolean _initialized = false;
-    private GaidAsyncTask _gaidAsyncTask = null;
     public String gaid;
     private AdZone _adZone;
 
@@ -260,74 +259,6 @@ public class MinimobAdController {
             if (_dictionary.containsKey(id)) {
                 _dictionary.remove(id);
             }
-        }
-    }
-
-    public void StartGaidAsyncTask(final Activity activity, final String adTag)
-    {
-        try
-        {
-            // start the task
-            if (_gaidAsyncTask == null || _gaidAsyncTask.getStatus().equals(AsyncTask.Status.FINISHED))
-            {
-                _gaidAsyncTask = new GaidAsyncTask(activity, adTag);
-                _gaidAsyncTask.execute();
-            }
-        }
-        catch (Exception ex)
-        {
-            Log.e(TAG, ex.getMessage());
-        }
-    }
-
-    private class GaidAsyncTask extends AsyncTask<Activity, Void, String>
-    {
-        private final Activity _activity;
-        private final String _adTag;
-
-        GaidAsyncTask(Activity activity, String adTag)
-        {
-            _activity = activity;
-            _adTag = adTag;
-        }
-
-        @Override
-        protected String doInBackground(Activity... params)
-        {
-            String gaid = "";
-            // Moves the current Thread into the background
-            android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
-
-            AdvertisingIdClient.AdInfo adInfo = null;
-            try
-            {
-                adInfo = AdvertisingIdClient.getAdvertisingIdInfo(_activity);
-                final String id = adInfo.getId();
-                //final boolean isLAT = adInfo.isLimitAdTrackingEnabled();
-                gaid = id;
-
-            }
-            catch (Exception ex)
-            {
-                // Unrecoverable error connecting to Google Play services (e.g.,
-                // the old version of the service doesn't support getting AdvertisingId).
-                gaid = "";
-                ex.printStackTrace();
-                Log.e(TAG + "-" + "getGAID", ex.getMessage());
-            }
-            finally
-            {
-                _initialized = true;
-            }
-
-            return gaid;
-        }
-
-        @Override
-        protected void onPostExecute(String s)
-        {
-            super.onPostExecute(s);
-            gaid = s;
         }
     }
 }
