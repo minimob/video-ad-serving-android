@@ -281,6 +281,7 @@ public class AdZoneVideo extends AdZone implements IMinimobViewListener
     public void onAdsAvailable(MinimobBaseView minimobBaseView, String packageId)
     {
         MinimobHelper.getInstance().logMessage(TAG + "-" + IMinimobViewListener.class.getSimpleName(), "onAdsAvailable");
+        this._state = this._state.doAction(Event.ADS_AVAILABLE, this);
 
         if (this._adsAvailableListener != null)
         {
@@ -298,14 +299,13 @@ public class AdZoneVideo extends AdZone implements IMinimobViewListener
         {
             this.packageId = packageId;
         }
-
-        this._state = this._state.doAction(Event.ADS_AVAILABLE, this);
     }
 
     @Override
     public void onAdsNotAvailable(MinimobBaseView minimobBaseView)
     {
         MinimobHelper.getInstance().logMessage(TAG + "-" + IMinimobViewListener.class.getSimpleName(), "onAdsNotAvailable");
+        this._state = this._state.doAction(Event.ADS_NOT_AVAILABLE, this);
 
         if (this._adsNotAvailableListener != null)
         {
@@ -318,8 +318,6 @@ public class AdZoneVideo extends AdZone implements IMinimobViewListener
                 }
             });
         }
-
-        this._state = this._state.doAction(Event.ADS_NOT_AVAILABLE, this);
     }
 
     @Override
