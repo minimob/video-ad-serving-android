@@ -1,0 +1,40 @@
+<!-- POM file is being created by https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle -->
+<!--<project>-->
+    <!--<parent>-->
+        <!--<groupId>com.minimob</groupId>-->
+        <!--<artifactId>video-ad-serving</artifactId>-->
+        <!--<version>${versionName}</version>-->
+    <!--</parent>-->
+
+    <!--<modelVersion>4.0.0</modelVersion>-->
+    <!--<groupId>com.minimob</groupId>-->
+    <!--<artifactId>minimob-adserving</artifactId>-->
+    <!--<version>${versionName}</version>-->
+
+    <!--<name>${project.groupId}:${project.artifactId}</name>-->
+    <!--<description>Video ads integration library</description>-->
+    <!--<url>http://www.minimob.com</url>-->
+
+    <!--<licenses>-->
+        <!--<license>-->
+            <!--<name>The Apache License, Version 2.0</name>-->
+            <!--<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>-->
+        <!--</license>-->
+    <!--</licenses>-->
+
+    <!--<developers>-->
+        <!--<developer>-->
+            <!--<name>Minimob Developer</name>-->
+            <!--<email>minimobdeveloper@gmail.com</email>-->
+            <!--<organization>Minimob</organization>-->
+            <!--<organizationUrl>http://www.minimob.com</organizationUrl>-->
+        <!--</developer>-->
+    <!--</developers>-->
+
+    <!--<scm>-->
+        <!--<connection>scm:git:git@github.com:minimob/video-ad-serving.git</connection>-->
+        <!--<developerConnection>scm:git:git@github.com:minimob/video-ad-serving.git</developerConnection>-->
+        <!--<url>git@github.com:minimob/video-ad-serving.git</url>-->
+    <!--</scm>-->
+
+<!--</project>-->

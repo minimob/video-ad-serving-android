@@ -1,0 +1,19 @@
+<!-- POM file is being created by https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle -->
+
+<!--<project>-->
+    <!--<properties>-->
+        <!--<versionName>1.0.26</versionName>-->
+        <!--<maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ss'Z'</maven.build.timestamp.format>-->
+    <!--</properties>-->
+
+    <!--<modelVersion>4.0.0</modelVersion>-->
+    <!--<groupId>com.minimob</groupId>-->
+    <!--<artifactId>video-ad-serving</artifactId>-->
+    <!--<version>${versionName}</version>-->
+    <!--<packaging>pom</packaging>-->
+
+    <!--<modules>-->
+        <!--<module>minimob-adserving</module>-->
+    <!--</modules>-->
+
+<!--</project>-->
