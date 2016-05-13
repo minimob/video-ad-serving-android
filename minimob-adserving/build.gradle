@@ -1,10 +1,10 @@
-////for bintray upload (maven repo) NOT USING nuuneoi's library
+////REGION for bintray upload (maven repo) NOT USING nuuneoi's library
 //plugins {
 //    id "com.jfrog.bintray" version "1.6"
 //}
 //apply plugin: 'com.jfrog.bintray'
 //apply plugin: 'maven'
-////for bintray upload (maven repo) NOT USING nuuneoi's library
+////REGION for bintray upload (maven repo) NOT USING nuuneoi's library
 
 apply plugin: 'com.android.library'
 
@@ -33,7 +33,11 @@ dependencies {
     compile 'com.android.support:support-v4:23.4.0'
 }
 
-//for bintray upload (maven repo) USING nuuneoi's library
+//REGION for bintray upload (maven repo) USING nuuneoi's library
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def versionName = properties.getProperty('versionName')
+
 ext {
     bintrayRepo = 'maven'
     bintrayName = 'minimob-adserving'
@@ -47,7 +51,7 @@ ext {
     siteUrl = 'https://github.com/minimob/video-ad-serving'
     gitUrl = 'https://github.com/minimob/video-ad-serving.git'
 
-    libraryVersion = '1.0.27'
+    libraryVersion = versionName
 
     developerId = 'minimob'
     developerName = 'Minimob Developer'
@@ -61,16 +65,46 @@ ext {
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
 
-//for bintray upload (maven repo) USING nuuneoi's library
+//REGION for bintray upload (maven repo) USING nuuneoi's library
 
 
-////for bintray upload (maven repo) NOT USING nuuneoi's library
+////REGION for bintray upload (maven repo) NOT USING nuuneoi's library
 ////get parameters from local.properties
 //Properties properties = new Properties()
 //properties.load(project.rootProject.file('local.properties').newDataInputStream())
 //def bintray_user = properties.getProperty('bintray.user')
 //def bintray_apikey = properties.getProperty('bintray.apikey')
 //def bintray_gpg_password = properties.getProperty('bintray.gpg.password')
+//def versionName = properties.getProperty('versionName')
+//
+//version = versionName
+//
+//if (project.hasProperty("android")) { // Android libraries
+//    task sourcesJar(type: Jar) {
+//        classifier = 'sources'
+//        from android.sourceSets.main.java.srcDirs
+//    }
+//
+//    task javadoc(type: Javadoc) {
+//        source = android.sourceSets.main.java.srcDirs
+//        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+//    }
+//} else { // Java libraries
+//    task sourcesJar(type: Jar, dependsOn: classes) {
+//        classifier = 'sources'
+//        from sourceSets.main.allSource
+//    }
+//}
+//
+//task javadocJar(type: Jar, dependsOn: javadoc) {
+//    classifier = 'javadoc'
+//    from javadoc.destinationDir
+//}
+//
+//artifacts {
+//    archives javadocJar
+//    archives sourcesJar
+//}
 //
 //bintray {
 //    user = bintray_user
@@ -91,7 +125,7 @@ apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.
 //        //Optional version descriptor
 //        version {
 //            desc = 'Video ads integration library'
-//            vcsTag = '1.0.27'
+//            vcsTag = versionName
 //
 //            gpg {
 //                sign = true
@@ -112,4 +146,4 @@ apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.
 ////    }
 ////}
 //
-////for bintray upload (maven repo) NOT USING nuuneoi's library
+////REGION for bintray upload (maven repo) NOT USING nuuneoi's library
