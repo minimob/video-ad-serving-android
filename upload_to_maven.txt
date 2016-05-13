@@ -1,0 +1,4 @@
+#First step is to check the correctness of code and build the library files (aar, pom, etc.). Type the below command to do so.
+#> gradlew install
+#Next step is to upload the built files to bintray with following command.
+#> gradlew bintrayUpload
