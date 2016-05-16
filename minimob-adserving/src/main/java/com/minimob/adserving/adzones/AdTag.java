@@ -54,7 +54,7 @@ public class AdTag
 
     public void setCustomTrackingData(String customTrackingData)
     {
-        this._adTag = setAdTagSetting("[customTrackingData]", customTrackingData, this._adTag);
+        this._adTag = setAdTagSetting("[custom_tracking_data]", customTrackingData, this._adTag);
     }
 
     public void setGaid(String gaid)
