@@ -23,16 +23,17 @@
 
 <h3>Importing the Minimob ad-serving module to your project</h3>
 <p>You can import the required Minimob ad-serving module either manually or automatically.</p>
-<h5>Manually</h5>
-<p>First, download the <a href="https://github.com/minimob/video-ad-serving#">Minimob video-ad-serving project</a> from Github and import the <strong>minimob-adserving</strong> module to your project.</p>
+<h5>Importing the source code</h5>
+<p>First, download the current project from Github and import the <strong>minimob-adserving</strong> module to your project.</p>
 <p>Then, assuming you are using <strong>Gradle</strong>, go to the <strong>build.gradle</strong> script file of your app module and add the following line in the <strong>dependencies</strong> block:</p>
 <pre class="prettyprint linenums=5"><code>
 compile project(':minimob-adserving')
  
 </code></pre>
 
-<h5>Automatically</h5>
-<p>If you are using <strong>Gradle</strong>, you can automatically import the module. </p>
+<h5>Retrieving from online repositories</h5>
+<p>If you are using <strong>Gradle</strong>, you can automatically import the module from a Github or a Maven repository. </p>
+<h6>From Github repository</h6>
 <ul>
 <li>At the <strong>build.gradle</strong> script file of your <em>app module</em>, add the following line in the <strong>dependencies</strong> block:</li>
 </ul>
@@ -59,39 +60,40 @@ allprojects {
 
 </code></pre>
 
-<h3>Requesting, loading and displaying video ads from Minimob</h3>
-<p>Two distinct cases are distinguished:</p>
+<h6>From Maven repository</h6>
 <ul>
-<li><strong>Video ad</strong>: a single call is used for loading and showing a video ad </li>
-<li><strong>Preloaded video ad</strong>: two separate calls are used, one for loading a video ad, and another for showing the video ad</li>
+<li>At the <strong>build.gradle</strong> script file of your <em>app module</em>, add the following line in the <strong>dependencies</strong> block:</li>
 </ul>
-
-<h5>Video ad </h5>
-<p>First, create a variable of <strong>AdZoneVideo</strong> type in your desired scope named, for example, <strong>adZoneVideo</strong>.</p>
-<p>Then, create a method named <strong>_setupAdZone</strong>, for example, and, at the point in your code where you want to show the video ad, execute it.</p>
 <pre class="prettyprint linenums=5"><code>
-private void _setupAdZone()
-{
-
-}
+compile 'com.minimob.adserving:minimob-adserving:1.0.26'
 
 </code></pre>
 
-<p>In the <strong>_setupAdZone</strong> method:</p>
+<h3>Requesting, loading and displaying video ads from Minimob</h3>
+<p>Two distinct cases are distinguished:</p>
 <ul>
-<li>Use <strong>setAdZoneCreatedListener</strong> of <strong>MinimobAdController</strong> and override the <strong>onAdZoneCreated</strong> method. In this method the <strong>adZone</strong> is returned.</li>
-<li>In the <strong>onAdZoneCreated</strong> method, you can optionally set listeners for events such as: <strong>ads available</strong>, <strong>ads NOT available, video playing</strong>, <strong>video finished</strong>, <strong>video closed</strong>. This enables you to customize the user experience according to the needs of your app.</li>
-<li>The <strong>adZoneVideo.show</strong> call loads and shows the video.</li>
+<li><strong>Video ad</strong>: a single call –  <strong>.show ()</strong> – is used for loading and showing a video ad </li>
+<li><strong>Preloaded video ad</strong>: two separate calls are used, one for loading a video ad – <strong>.load()</strong> – and another for showing the video ad – <strong>.show()</strong> </li>
 </ul>
+
+<h5>Video ad </h5>
+<p>First, instantiate the <strong>AdZoneVideo</strong> class in your desired scope, named, for example, <strong>adZoneVideo</strong>.</p>
+<p>Then, at the point in your code where you want to show the video ad, include the following lines.</p>
 <pre class="prettyprint linenums=5"><code>
+// Create a method and include the following
+
+// Use setAdZoneCreatedListener of MinimobAdController and override the onAdZoneCreated method
     MinimobAdController.getInstance().setAdZoneCreatedListener(new IAdZoneCreatedListener()
     {
+// In this method, the adZone is returned
         @Override
         public void onAdZoneCreated(AdZone adZone)
         {
             adZoneVideo = (AdZoneVideo) adZone;
             if (adZoneVideo != null)
             {
+// Optionally, set listeners for events such as: ads available, ads NOT available, video playing, video finished, video closed. 
+// This enables you to customize the user experience according to the needs of your app.
                 adZoneVideo.setAdsAvailableListener(new IAdsAvailableListener() {
                     @Override
                     public void onAdsAvailable(AdZone adZone) {
@@ -117,24 +119,12 @@ private void _setupAdZone()
                     public void onVideoClosed(AdZone adZone) {
                     }
                 });
-
+// Load and show the video ad
                 adZoneVideo.show();
             }
         }
     });
-
-
-</code></pre>
-
-<p>Then, again in the <strong>_setupAdZone</strong> method, include the following lines that specify and perform the ad request:</p>
-<ul>
-<li>Copy the JavaScript Ad Tag that is given at the corresponding Ad Zone under <strong>Monetize &gt; Video Ads</strong> of the Minimob dashboard, and paste it at the <strong>adTagString</strong>.</li>
-<li>Create the <strong>AdTag</strong> object. You will need a <em>Context</em> as a parameter. If you are in an <em>Activity</em>, you can use the <em>Activity</em> itself and if you are on a <em>Fragment</em>, use <strong>getContext()</strong>.</li>
-<li>Besides specifying custom tracking data using the <strong>adTag.setCustomTrackingData</strong> method, you can specify <em>Age</em>, <em>Category</em> and <em>Gender</em> using the <strong>adTag.setAge</strong>, <strong>adTag.setCategory</strong> and <strong>adTag.setGender</strong> methods respectively.</li>
-<li>The <strong>getVideo</strong> method needs an <em>Activity</em> as a parameter. If you are in an <em>Activity</em>, you will use the <em>Activity</em> itself and if you are on a <em>Fragment</em>, use <strong>getActivity()</strong>.</li>
-</ul>
-<pre class="prettyprint linenums=5"><code>
-    // ADTAG
+// Copy the JavaScript Ad Tag that is given at the corresponding Ad Zone under Monetize &gt; Video Ads of the Minimob dashboard, and paste it at the adTagString
     String adTagString = "&lt;script&gt; \n" +
                     " var mmAdTagSettings = { \n" +
                     " imei: \"[imei]\", \n" +
@@ -170,41 +160,37 @@ private void _setupAdZone()
                     " placement: \"video fullscreen interstitial\"}; \n" +
                     " &lt;/script&gt; \n" +
                     " &lt;script id=\"sdk-loader\" onerror=\"if(typeof(mmji)!='undefined'){mmji.noAds()}\" type=\"text/javascript\" src=\"http://s-dev.rtad.bid/assets/video-fullscreen-mmji.js\"&gt;&lt;/script&gt;";
-    //create the AdTag object
+// Create the AdTag object. You will need a Context as a parameter. If you are in an Activity, you can use the Activity itself and if you are on a Fragment, use getContext()
     AdTag adTag = new AdTag(getContext(), adTagString);
-    //set the custom tracking data (optional)
+// Optionally, specify the Custom tracking data, as well as Age, Category and Gender
     adTag.setCustomTrackingData("some tracking data");
-    //create the AdZone
+    adTag.setAge("user age");
+    adTag.setCategory("advertised apps category");
+    adTag.setGender("user gender");
+// Create the AdZone. The getVideo method needs an Activity as a parameter. 
+// If you are in an Activity, you will use the Activity itself and if you are on a Fragment, use getActivity().
     MinimobAdController.getInstance().getVideo(getActivity(), adTag);
 
 </code></pre>
 
 <h5>Preloaded video ad</h5>
-<p>First, create a variable of <strong>AdZoneVideo</strong> type in your desired scope named, for example, <strong>adZoneVideo</strong>.</p>
-<p>Then, create a method named <strong>_setupAdZone</strong>, for example, and, at the point in your code where you want to preload the video ad, execute it.</p>
+<p>First, instantiate the <strong>AdZoneVideo</strong> class in your desired scope, named, for example, <strong>adZoneVideo</strong>.</p>
+<p>Then, at the point in your code where you want to preload the video ad, include the following lines.</p>
 <pre class="prettyprint linenums=5"><code>
-private void _setupAdZone()
-{
+// Create a method and include the following
 
-}
-
-</code></pre>
-
-<p>In the <strong>_setupAdZone</strong> method:</p>
-<ul>
-<li>Use <strong>setAdZoneCreatedListener</strong> of <strong>MinimobAdController</strong> and override the <strong>onAdZoneCreated</strong> method. In this method the <strong>adZone</strong> is returned.</li>
-<li>In the <strong>onAdZoneCreated</strong> method, you can optionally set listeners for events such as: <strong>ads available</strong>, <strong>ads NOT available, video loading</strong>, <strong>video loaded</strong>, <strong>video playing</strong>, <strong>video finished</strong>, <strong>video closed</strong>. This enables you to customize the user experience according to the needs of your app. In the example, the <strong>_setupAdZone</strong> method calls itself within the overridden methods of the <strong>IVideoPlayingListener</strong> and <strong>IVideoClosedListener</strong> listeners, to achieve preloading of the next video ad in advance. </li>
-<li>The <strong>adZoneVideoPreloaded.load</strong> call only loads the video. A separate call must be used for showing the video, as described further below.</li>
-</ul>
-<pre class="prettyprint linenums=5"><code>
+// Use setAdZoneCreatedListener of MinimobAdController and override the onAdZoneCreated method
     MinimobAdController.getInstance().setAdZoneCreatedListener(new IAdZoneCreatedListener()
     {
+// In this method, the adZone is returned
         @Override
         public void onAdZoneCreated(AdZone adZone)
         {
             adZoneVideoPreloaded = (AdZoneVideoPreloaded) adZone;
             if (adZoneVideoPreloaded != null)
             {
+// Optionally, set listeners for events such as: ads available, ads NOT available, video loading, video loaded, video playing, video finished, video closed. 
+// This enables you to customize the user experience according to the needs of your app.
                 adZoneVideoPreloaded.setAdsAvailableListener(new IAdsAvailableListener()
                 {
                     @Override
@@ -229,7 +215,7 @@ private void _setupAdZone()
                 adZoneVideoPreloaded.setVideoPlayingListener(new IVideoPlayingListener() {
                     @Override
                     public void onVideoPlaying(AdZone adZone) {
-                        _setupAdZone();
+// e.g. have the method call itself, in order to preload the next video
                     }
                 });
                 adZoneVideoPreloaded.setVideoFinishedListener(new IVideoFinishedListener() {
@@ -240,25 +226,15 @@ private void _setupAdZone()
                 adZoneVideoPreloaded.setVideoClosedListener(new IVideoClosedListener() {
                     @Override
                     public void onVideoClosed(AdZone adZone) {
-                        _setupAdZone();
+// e.g. have the method call itself, in order to preload the next video
                     }
                 });
+// Load the video ad
                 adZoneVideoPreloaded.load();
             }
         }
     });
-
-</code></pre>
-
-<p>Then, again in the <strong>_setupAdZone</strong> method, include the following lines that specify and perform the ad request:</p>
-<ul>
-<li>Copy the JavaScript Ad Tag that is given at the corresponding Ad Zone under <strong>Monetize &gt; Video Ads</strong> of the Minimob dashboard, and paste it at the <strong>adTagString</strong>.</li>
-<li>Create the <strong>AdTag</strong> object. You will need a <em>Context</em> as a parameter. If you are in an <em>Activity</em>, you can use the <em>Activity</em> itself and if you are on a <em>Fragment</em>, use <strong>getContext()</strong>.</li>
-<li>Besides specifying custom tracking data using the <strong>adTag.setCustomTrackingData</strong> method, you can specify <em>Age</em>, <em>Category</em> and <em>Gender</em> using the <strong>adTag.setAge</strong>, <strong>adTag.setCategory</strong> and <strong>adTag.setGender</strong> methods respectively.</li>
-<li>The <strong>getVideo</strong> method needs an <em>Activity</em> as a parameter. If you are in an <em>Activity</em>, you will use the <em>Activity</em> itself and if you are on a <em>Fragment</em>, use <strong>getActivity()</strong>.</li>
-</ul>
-<pre class="prettyprint linenums=5"><code>
-    // ADTAG
+// Copy the JavaScript Ad Tag that is given at the corresponding Ad Zone under Monetize &gt; Video Ads of the Minimob dashboard, and paste it at the adTagString
     String adTagString = "&lt;script&gt; \n" +
                     " var mmAdTagSettings = { \n" +
                     " imei: \"[imei]\", \n" +
@@ -294,18 +270,21 @@ private void _setupAdZone()
                     " placement: \"video fullscreen interstitial\"}; \n" +
                     " &lt;/script&gt; \n" +
                     " &lt;script id=\"sdk-loader\" onerror=\"if(typeof(mmji)!='undefined'){mmji.noAds()}\" type=\"text/javascript\" src=\"http://s-dev.rtad.bid/assets/video-fullscreen-mmji.js\"&gt;&lt;/script&gt;";
-    //create the AdTag object
+// Create the AdTag object. You will need a Context as a parameter. If you are in an Activity, you can use the Activity itself and if you are on a Fragment, use getContext()
     AdTag adTag = new AdTag(getContext(), adTagString);
-    //set the custom tracking data (optional)
+// Optionally, specify the Custom tracking data, as well as Age, Category and Gender
     adTag.setCustomTrackingData("some tracking data");
-    //create the AdZone
+    adTag.setAge("user age");
+    adTag.setCategory("advertised apps category");
+    adTag.setGender("user gender");
+// Create the AdZone. The getVideo method needs an Activity as a parameter. If you are in an Activity, you will use the Activity itself and if you are on a Fragment, use getActivity().
     MinimobAdController.getInstance().getVideo(getActivity(), adTag);
 
 </code></pre>
 
-<p>At the point in your code where you want to show the video ad, you need to call the <strong>adZoneVideoPreloaded.show</strong> method. 
-The <strong>adZoneVideoPreloaded.show</strong> method shows the video. For example, assuming that you want to show the preloaded video when the user clicks the <strong>video_btnFullscreen_play</strong> button:</p>
+<p>Finally, at the point in your code where you want to show the video ad, you need to call the <strong>adZoneVideoPreloaded.show</strong> method. </p>
 <pre class="prettyprint linenums=5"><code>
+// assuming that you want to show the preloaded video when the user clicks the video_btnFullscreen_play button
 video_btnFullscreen_play = (Button) _activity.findViewById(R.id.video_btnFullscreen_play_preloaded);
 video_btnFullscreen_play.setOnClickListener(new View.OnClickListener()
 {
@@ -313,6 +292,7 @@ video_btnFullscreen_play.setOnClickListener(new View.OnClickListener()
     public void onClick(View view)
     {
         if (adZoneVideoPreloaded != null) {
+// Show the video ad
             adZoneVideoPreloaded.show();
         }
     }
@@ -334,16 +314,14 @@ video_btnFullscreen_play.setOnClickListener(new View.OnClickListener()
     <th>Parameter</th>
     <th>Type</th>
     <th>Description</th>
-    <th>Value placeholder</th>
-    <th>Example of actual value</th>
+    <th>Example</th>
   </tr>
   <tr>
     <td>imei</td>
     <td>String</td>
     <td>The International Mobile Station Equipment Identity number that uniquely identifies mobile phones
 Hashed MD5 or SHA1</td>
-    <td>"[imei]"</td>
-    <td>imei: " d41d8cd98f00b204e9800998ecf8427e"</td>
+    <td>"d41d8cd98f00b204e9800998ecf8427e"</td>
   </tr>
   <tr>
     <td>android_id</td>
@@ -351,32 +329,28 @@ Hashed MD5 or SHA1</td>
     <td>[android only]
 The Android ID of the device
 Hashed MD5 or SHA1</td>
-    <td>"[android_id]"</td>
-    <td>android_id: " d3b4f06fc2bd14b417f39f7d7e72f47f"</td>
+    <td>"d3b4f06fc2bd14b417f39f7d7e72f47f"</td>
   </tr>
   <tr>
     <td>gaid</td>
     <td>String </td>
     <td>[android only]
 Raw (clear text) Google Advertising ID</td>
-    <td>"[gaid]"</td>
-    <td>gaid: "3D016490-C470-4B04-99AD-B4FFF3330D46"</td>
+    <td>"3D016490-C470-4B04-99AD-B4FFF3330D46"</td>
   </tr>
   <tr>
     <td>idfa</td>
     <td>String </td>
     <td>[iOS only]
 Raw (clear text) Apple’s Identifier For Advertisers (IFA/IDFA)</td>
-    <td>"[idfa]"</td>
-    <td>idfa: "236A005B-700F-4889-B9CE-999EAB2B605D"</td>
+    <td>"236A005B-700F-4889-B9CE-999EAB2B605D"</td>
   </tr>
   <tr>
     <td>idfv</td>
     <td>String </td>
     <td>[iOS only]
 Raw (clear text) Apple’s Identifier For Vendor (IFA/IDFA)</td>
-    <td>"[idfv]"</td>
-    <td>idfv: "599F9C00-92DC-4B5C-9464-7971F01F8370"</td>
+    <td>"599F9C00-92DC-4B5C-9464-7971F01F8370"</td>
   </tr>
   <tr>
     <td>category</td>
@@ -384,16 +358,14 @@ Raw (clear text) Apple’s Identifier For Vendor (IFA/IDFA)</td>
 comma separated multiple values are allowed</td>
     <td>The category ID of advertised apps, as defined by <a href="http://www.iab.com/wp-content/uploads/2016/03/OpenRTB-API-Specification-Version-2-4-FINAL.pdf#">IAB</a>.
 Category is used for filtering the ads. Several comma separated values can be specified to filter for multiple categories. Only ads from apps that belong to the specified categories will be served. </td>
-    <td>"[category]"</td>
-    <td>category: "IAB1-1,IAB2"</td>
+    <td>"IAB1-1,IAB2"</td>
   </tr>
   <tr>
     <td>age</td>
     <td>Integer</td>
     <td>The age of the device user
 If omitted (i.e. null), it implies "unknown".</td>
-    <td>"[age]"</td>
-    <td>age: "37"</td>
+    <td>"37"</td>
   </tr>
   <tr>
     <td>gender</td>
@@ -401,16 +373,14 @@ If omitted (i.e. null), it implies "unknown".</td>
 M = male, F = female, O = known to be other</td>
     <td>The gender of the device user 
 If omitted (i.e. null), it implies "unknown". </td>
-    <td>"[gender]"</td>
-    <td>gender: "F"</td>
+    <td>"F"</td>
   </tr>
   <tr>
     <td>keywords</td>
     <td>String
 comma separated multiple values are allowed</td>
     <td>List of keywords to filter ads by (e.g. list of interests of the device user)</td>
-    <td>"[keywords]"</td>
-    <td>keywords: "fashion,sailing"</td>
+    <td>"fashion,sailing"</td>
   </tr>
   <tr>
     <td>lat</td>
@@ -418,8 +388,7 @@ comma separated multiple values are allowed</td>
 from -90.0 to +90.0, where negative is south</td>
     <td>Latitude of the mobile device
 Should be used together with the <strong>lon</strong> parameter.</td>
-    <td>"[lat]"</td>
-    <td>lat: "+10.2"</td>
+    <td>"+10.2"</td>
   </tr>
   <tr>
     <td>lon</td>
@@ -427,15 +396,13 @@ Should be used together with the <strong>lon</strong> parameter.</td>
 from -180.0 to +180.0, where negative is west</td>
     <td>Longitude of the mobile device 
 Should be used together with the <strong>lat</strong> parameter.</td>
-    <td>"[lon]"</td>
-    <td>lon: "-102.8"</td>
+    <td>"-102.8"</td>
   </tr>
   <tr>
     <td>device_width</td>
     <td>Integer</td>
     <td>The width of the mobile device, in physical pixels</td>
-    <td>"[device_width]"</td>
-    <td>device_width: "1440"
+    <td>"1440"
  
 </td>
   </tr>
@@ -443,8 +410,7 @@ Should be used together with the <strong>lat</strong> parameter.</td>
     <td>device_height</td>
     <td>Integer</td>
     <td>The height of the mobile device, in physical pixels</td>
-    <td>"[device_height]"</td>
-    <td>device_height: "2560"
+    <td>"2560"
  
 </td>
   </tr>
@@ -453,8 +419,7 @@ Should be used together with the <strong>lat</strong> parameter.</td>
     <td>Integer</td>
     <td>The mobile network code of the mobile network operator of the mobile device
 It is used in combination with the mobile country code (MCC) to uniquely identify the mobile phone operator/carrier.</td>
-    <td>"[mnc]"</td>
-    <td>mnc: "260"
+    <td>"260"
  
 </td>
   </tr>
@@ -463,8 +428,7 @@ It is used in combination with the mobile country code (MCC) to uniquely identif
     <td>Integer</td>
     <td>The mobile country code of the mobile network operator of the mobile device
 It is used in combination with the mobile network code (MNC) to uniquely identify the mobile phone operator/carrier.</td>
-    <td>"[mcc]"</td>
-    <td>mcc: " 310"
+    <td>" 310"
  
 </td>
   </tr>
@@ -474,8 +438,7 @@ It is used in combination with the mobile network code (MNC) to uniquely identif
     <td>The network connection type of the mobile device 
 true: indicates that the device is currently connected to the internet via WiFi
 false: indicates that the current network connection of the device is NOT via WiFi </td>
-    <td>"[wifi]", </td>
-    <td>wifi: "true"
+    <td>"true"
  
 </td>
   </tr>
@@ -484,8 +447,7 @@ false: indicates that the current network connection of the device is NOT via Wi
     <td>String</td>
     <td>[iOS only]
 The iOS version of the operating system of the device </td>
-    <td>"[ios_version]"</td>
-    <td>ios_version: "7.1.2"
+    <td>"7.1.2"
  
 </td>
   </tr>
@@ -494,8 +456,7 @@ The iOS version of the operating system of the device </td>
     <td>String</td>
     <td>[android only]
 The android version of the operating system of the device</td>
-    <td>"[android_version]"</td>
-    <td>android_version: "4.4.2"
+    <td>"4.4.2"
  
 </td>
   </tr>
@@ -503,8 +464,7 @@ The android version of the operating system of the device</td>
     <td>placement_width</td>
     <td>Integer</td>
     <td>The width of the advertising area within the app, where the ads are placed, in pixels</td>
-    <td>"[placement_width]"</td>
-    <td>placement_width: "720"
+    <td>"720"
  
 </td>
   </tr>
@@ -512,8 +472,7 @@ The android version of the operating system of the device</td>
     <td>placement_height</td>
     <td>Integer</td>
     <td>The height of the advertising area within the app, where the ads are placed, in pixels</td>
-    <td>"[placement_height]"</td>
-    <td>placement_height: "1280"
+    <td>"1280"
  </td>
   </tr>
   <tr>
@@ -521,15 +480,13 @@ The android version of the operating system of the device</td>
     <td>Boolean</td>
     <td>true: indicates that the requested video ad will be preloaded
 false: indicates that the requested video ad will NOT be preloaded</td>
-    <td>"[preload]"</td>
-    <td>preload: "true"</td>
+    <td>"true"</td>
   </tr>
   <tr>
     <td>custom_tracking_data</td>
     <td>String</td>
     <td>Custom information, defined by the app developer </td>
-    <td>"[custom_tracking_data]" </td>
-    <td>custom_tracking_data: "00000000-5a19-dc1b-ffff-ffffef05ac4a"</td>
+    <td>"00000000-5a19-dc1b-ffff-ffffef05ac4a"</td>
   </tr>
 </table>
  
@@ -703,4 +660,4 @@ IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
 OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.</p>
-<p>For more information, please refer to <a href="http://unlicense.org/#">http://unlicense.org</a></p>
+<p>For more information, please refer to <a href="http://unlicense.org/#">http://unlicense.org</a> </p>
