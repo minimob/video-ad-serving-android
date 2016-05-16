@@ -159,7 +159,7 @@ compile 'com.minimob.adserving:minimob-adserving:1.0.26'
                     " bundleId: \"com.minimob.addemos\", \n" +
                     " placement: \"video fullscreen interstitial\"}; \n" +
                     " &lt;/script&gt; \n" +
-                    " &lt;script id=\"sdk-loader\" onerror=\"if(typeof(mmji)!='undefined'){mmji.noAds()}\" type=\"text/javascript\" src=\"http://s-dev.rtad.bid/assets/video-fullscreen-mmji.js\"&gt;&lt;/script&gt;";
+                    " &lt;script id=\"sdk-loader\" onerror=\"if(typeof(mmji)!='undefined'){mmji.noAds()}\" type=\"text/javascript\" src=\"http://s.rtad.bid/assets/video-fullscreen-mmji.js\"&gt;&lt;/script&gt;";
 // Create the AdTag object. You will need a Context as a parameter. If you are in an Activity, you can use the Activity itself and if you are on a Fragment, use getContext()
     AdTag adTag = new AdTag(getContext(), adTagString);
 // Optionally, specify the Custom tracking data, as well as Age, Category and Gender
@@ -269,7 +269,7 @@ compile 'com.minimob.adserving:minimob-adserving:1.0.26'
                     " bundleId: \"com.minimob.addemos\", \n" +
                     " placement: \"video fullscreen interstitial\"}; \n" +
                     " &lt;/script&gt; \n" +
-                    " &lt;script id=\"sdk-loader\" onerror=\"if(typeof(mmji)!='undefined'){mmji.noAds()}\" type=\"text/javascript\" src=\"http://s-dev.rtad.bid/assets/video-fullscreen-mmji.js\"&gt;&lt;/script&gt;";
+                    " &lt;script id=\"sdk-loader\" onerror=\"if(typeof(mmji)!='undefined'){mmji.noAds()}\" type=\"text/javascript\" src=\"http://s.rtad.bid/assets/video-fullscreen-mmji.js\"&gt;&lt;/script&gt;";
 // Create the AdTag object. You will need a Context as a parameter. If you are in an Activity, you can use the Activity itself and if you are on a Fragment, use getContext()
     AdTag adTag = new AdTag(getContext(), adTagString);
 // Optionally, specify the Custom tracking data, as well as Age, Category and Gender
@@ -585,7 +585,7 @@ false: for blocking video media supported ads</td>
         placement: "video fullscreen interstitial"
     };
 &lt;/script&gt;
-&lt;script id="sdk-loader" onerror="if(typeof(mmji)!='undefined'){mmji.noAds()}" type="text/javascript" src="http://s-dev.rtad.bid/assets/video-fullscreen-mmji.js"&gt;&lt;/script&gt;
+&lt;script id="sdk-loader" onerror="if(typeof(mmji)!='undefined'){mmji.noAds()}" type="text/javascript" src="http://s.rtad.bid/assets/video-fullscreen-mmji.js"&gt;&lt;/script&gt;
 
 </code></pre>
 
