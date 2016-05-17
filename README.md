@@ -22,7 +22,7 @@
 </ol>
 
 <h3>Importing the Minimob ad-serving module to your project</h3>
-<p>You can import the required Minimob ad-serving module either manually or automatically.</p>
+<p>You can import the required Minimob ad-serving module either from the source code or from online repositories.</p>
 <h5>Importing the source code</h5>
 <p>First, download the current project from Github and import the <strong>minimob-adserving</strong> module to your project.</p>
 <p>Then, assuming you are using <strong>Gradle</strong>, go to the <strong>build.gradle</strong> script file of your app module and add the following line in the <strong>dependencies</strong> block:</p>
@@ -167,7 +167,7 @@ compile 'com.minimob.adserving:minimob-adserving:1.0.26'
     adTag.setAge("user age");
     adTag.setCategory("advertised apps category");
     adTag.setGender("user gender");
-// Create the AdZone. The getVideo method needs an Activity as a parameter. 
+// Request the AdZone. The getVideo method needs an Activity as a parameter. 
 // If you are in an Activity, you will use the Activity itself and if you are on a Fragment, use getActivity().
     MinimobAdController.getInstance().getVideo(getActivity(), adTag);
 
@@ -277,7 +277,8 @@ compile 'com.minimob.adserving:minimob-adserving:1.0.26'
     adTag.setAge("user age");
     adTag.setCategory("advertised apps category");
     adTag.setGender("user gender");
-// Create the AdZone. The getVideo method needs an Activity as a parameter. If you are in an Activity, you will use the Activity itself and if you are on a Fragment, use getActivity().
+// Request the AdZone. The getVideo method needs an Activity as a parameter. 
+// If you are in an Activity, you will use the Activity itself and if you are on a Fragment, use getActivity().
     MinimobAdController.getInstance().getVideo(getActivity(), adTag);
 
 </code></pre>
@@ -501,45 +502,45 @@ false: indicates that the requested video ad will NOT be preloaded</td>
     <th>Example</th>
   </tr>
   <tr>
-    <td> adzoneId</td>
+    <td>adzoneId</td>
     <td>string</td>
     <td>The unique id of the particular ad zone</td>
     <td>"56f1727aFAKEc3"</td>
   </tr>
   <tr>
-    <td> templateId</td>
+    <td>templateId</td>
     <td>string</td>
     <td>The id of the template of the ad zone, i.e. the html code that will be used for rendering the ads.</td>
     <td> "video-fullscreen2.html"</td>
   </tr>
   <tr>
-    <td> mobile_web</td>
+    <td>mobile_web</td>
     <td>string</td>
     <td>true: for web app supported ads 
 false: [default] for in-app supported ads </td>
     <td> false</td>
   </tr>
   <tr>
-    <td> video_supported</td>
+    <td>video_supported</td>
     <td>string</td>
     <td>true: [default] for allowing video media supported ads 
 false: for blocking video media supported ads</td>
     <td> true</td>
   </tr>
   <tr>
-    <td> appId</td>
+    <td>appId</td>
     <td>string</td>
     <td>The unique id of the app to which the particular ad zone belongs</td>
     <td> "56d57201FAKE2e"</td>
   </tr>
   <tr>
-    <td> bundleId</td>
+    <td>bundleId</td>
     <td>string</td>
     <td>The bundle id of the app, as it is registered to the app store</td>
     <td> "com.minimob.addemos "</td>
   </tr>
   <tr>
-    <td> placement</td>
+    <td>placement</td>
     <td>string</td>
     <td>The placement type of the ad</td>
     <td> "video fullscreen interstitial" </td>
@@ -661,3 +662,4 @@ OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.</p>
 <p>For more information, please refer to <a href="http://unlicense.org/#">http://unlicense.org</a> </p>
+
