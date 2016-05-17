@@ -108,6 +108,7 @@ public class MinimobAdController {
         }
         else
         {
+            adTag.setGaid(gaid);
             AdZoneVideo az = _getVideo(activity, adTag.getAdTag());
             if (_adZoneCreatedListener != null) {
                 _adZoneCreatedListener.onAdZoneCreated(az);
@@ -210,6 +211,7 @@ public class MinimobAdController {
         }
         else
         {
+            adTag.setGaid(gaid);
             AdZoneVideoPreloaded az = _getVideoPreloaded(activity, adTag.getAdTag());
             if (_adZoneCreatedListener != null) {
                 _adZoneCreatedListener.onAdZoneCreated(az);

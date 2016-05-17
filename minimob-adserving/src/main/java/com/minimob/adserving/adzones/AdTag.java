@@ -31,7 +31,6 @@ public class AdTag
     
     private String _adTag;
     private Context _context;
-    private boolean _preload = false;
     //endregion VARIABLES
 
     //region CONSTRUCTORS
