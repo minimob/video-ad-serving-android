@@ -36,7 +36,7 @@ dependencies {
 //REGION for bintray upload (maven repo) USING nuuneoi's library
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
-def versionName = properties.getProperty('versionName')
+def property_versionName = properties.getProperty('versionName')
 
 ext {
     bintrayRepo = 'maven'
@@ -51,7 +51,7 @@ ext {
     siteUrl = 'https://github.com/minimob/video-ad-serving'
     gitUrl = 'https://github.com/minimob/video-ad-serving.git'
 
-    libraryVersion = versionName
+    libraryVersion = property_versionName
 
     developerId = 'minimob'
     developerName = 'Minimob Developer'
