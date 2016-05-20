@@ -8,7 +8,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -39,7 +38,7 @@ import java.util.UUID;
 public class MinimobHelper
 {
     //region VARIABLES
-    private String TAG = "MINIMOB-" + MinimobHelper.class.getSimpleName();
+    private String TAG = MinimobHelper.class.getSimpleName();
 
     private static final MinimobHelper _instance = new MinimobHelper();
 
@@ -93,7 +92,7 @@ public class MinimobHelper
             }
             catch (Exception ex)
             {
-                Log.e(TAG, ex.getMessage());
+                MinimobLog.e(TAG, ex.getMessage());
                 serial = "serial";
                 deviceId = "deviceid";
             }
@@ -102,7 +101,7 @@ public class MinimobHelper
         catch (Exception ex)
         {
             ex.printStackTrace();
-            Log.e(TAG + "-" + "getUniqueDeviceId", ex.getMessage());
+            MinimobLog.e(TAG + "-" + "getUniqueDeviceId", ex.getMessage());
         }
         return "";
     }
@@ -150,7 +149,7 @@ public class MinimobHelper
         }
         catch (Exception ex)
         {
-            Log.e(TAG + "-" + "getSQLFullDateTime", ex.getMessage());
+            MinimobLog.e(TAG + "-" + "getSQLFullDateTime", ex.getMessage());
             return "";
         }
     }
@@ -177,7 +176,7 @@ public class MinimobHelper
         }
         catch (Exception ex)
         {
-            Log.e(TAG + "-" + "getSQLFullDateTime", ex.getMessage());
+            MinimobLog.e(TAG + "-" + "getSQLFullDateTime", ex.getMessage());
             return "";
         }
     }
@@ -204,7 +203,7 @@ public class MinimobHelper
         }
         catch (Exception ex)
         {
-            Log.e(TAG + "-" + "getSQLFullDateTime", ex.getMessage());
+            MinimobLog.e(TAG + "-" + "getSQLFullDateTime", ex.getMessage());
             return "";
         }
     }
@@ -230,9 +229,10 @@ public class MinimobHelper
             String sDate = df.format(dt);
 
             date = df.parse(sDate);
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
-            Log.e(TAG + "-" + "convertDate", ex.getMessage());
+            MinimobLog.e(TAG + "-" + "convertDate", ex.getMessage());
         }
         return date;
     }
@@ -360,22 +360,22 @@ public class MinimobHelper
     public void handleCrash(String tag, Throwable ex)
     {
         ex.printStackTrace();
-        Log.e(TAG + "-" + tag, ex.getMessage(), ex);
+        MinimobLog.e(TAG + "-" + tag, ex.getMessage(), ex);
     }
 
     public void handleCrash(Throwable ex)
     {
         ex.printStackTrace();
-        Log.e(TAG, ex.getMessage(), ex);
+        MinimobLog.e(TAG, ex.getMessage(), ex);
     }
 
     public void logMessage(String suffix, String message)
     {
-        Log.d(TAG + "-" + suffix, message);
+        MinimobLog.d(TAG + "-" + suffix, message);
     }
     public void logError(String suffix, String message)
     {
-        Log.e(TAG + "-" + suffix, message);
+        MinimobLog.e(TAG + "-" + suffix, message);
     }
 
     public DisplayMetrics getDisplayMetrics(Activity activity)

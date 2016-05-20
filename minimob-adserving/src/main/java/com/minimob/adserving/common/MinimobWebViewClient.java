@@ -15,7 +15,7 @@ import com.minimob.adserving.interfaces.IMinimobWebViewLoadedListener;
  */
 public class MinimobWebViewClient extends WebViewClient
 {
-    private static String TAG = "MINIMOB-" + MinimobWebViewClient.class.getSimpleName();
+    private static String TAG = MinimobWebViewClient.class.getSimpleName();
     IMinimobWebViewLoadedListener _minimobWebViewLoadedListener;
     Activity activity;
 

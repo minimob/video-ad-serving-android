@@ -8,8 +8,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.util.Log;
 
+import com.minimob.adserving.helpers.MinimobLog;
 import com.minimob.adserving.interfaces.IMinimobAdListener;
 
 /**
@@ -17,22 +17,22 @@ import com.minimob.adserving.interfaces.IMinimobAdListener;
  */
 public class MinimobBaseActivity extends AppCompatActivity implements IMinimobAdListener
 {
-    public static String TAG = "MINIMOB";
+    public static String TAG = MinimobBaseActivity.class.getSimpleName();
 
     public void HandleCrash(String tag, Throwable ex)
     {
         ex.printStackTrace();
-        Log.d(TAG + "-" + tag, ex.getMessage(), ex);
+        MinimobLog.d(TAG + "-" + tag, ex.getMessage(), ex);
     }
 
     public void LogMessage(String suffix, String message)
     {
-        Log.d(TAG + "-" + suffix, message);
+        MinimobLog.d(TAG + "-" + suffix, message);
     }
 
     public void LogError(String suffix, String message)
     {
-        Log.e(TAG + "-" + suffix, message);
+        MinimobLog.e(TAG + "-" + suffix, message);
 }
 
     public void ShowFragment(int container, Fragment fragment)

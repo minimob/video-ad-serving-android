@@ -2,7 +2,6 @@ package com.minimob.adserving.helpers;
 
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.webkit.JavascriptInterface;
 
 import com.minimob.adserving.adzones.AdStatus;
@@ -14,7 +13,7 @@ import com.minimob.adserving.interfaces.IMinimobWebViewLoadedListener;
  */
 public class MinimobJSInterface extends AppCompatActivity
 {
-    private String TAG = "MINIMOB-" + MinimobJSInterface.class.getSimpleName();
+    private String TAG = MinimobJSInterface.class.getSimpleName();
     MinimobWebView minimobWebView;
     Activity _activity;
     IMinimobWebViewLoadedListener _minimobWebViewLoadedListener;
@@ -28,7 +27,7 @@ public class MinimobJSInterface extends AppCompatActivity
     @JavascriptInterface
     public void onAdsReady()
     {
-        Log.d(TAG, "onAdsReady");
+        MinimobLog.d(TAG, "onAdsReady");
 
         if (this._minimobWebViewLoadedListener != null)
         {
@@ -47,7 +46,7 @@ public class MinimobJSInterface extends AppCompatActivity
     @JavascriptInterface
     public void onNoAds()
     {
-        Log.d(TAG, "onNoAds");
+        MinimobLog.d(TAG, "onNoAds");
 
         if (this._activity != null)
         {

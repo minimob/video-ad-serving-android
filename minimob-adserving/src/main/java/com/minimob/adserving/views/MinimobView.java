@@ -13,7 +13,6 @@ import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,7 +28,7 @@ import com.minimob.adserving.common.MinimobBaseView;
 import com.minimob.adserving.common.MinimobWebChromeClient;
 import com.minimob.adserving.common.MinimobWebView;
 import com.minimob.adserving.interfaces.IMinimobViewListener;
-import com.minimob.adserving.helpers.MinimobViewLog;
+import com.minimob.adserving.helpers.MinimobLog;
 import com.minimob.adserving.helpers.MinimobViewCommandParser;
 
 import java.io.BufferedReader;
@@ -140,7 +139,7 @@ public class MinimobView extends MinimobBaseView
         _defaultPosition = new Rect();
 
         this._originalOrientation = originalOrientation;
-        MinimobViewLog.d(TAG, "originalRequestedOrientation " + getOrientationString(_originalOrientation));
+        MinimobLog.d(TAG, "originalRequestedOrientation " + getOrientationString(_originalOrientation));
 
         // ignore scroll gestures
         _gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener()
@@ -169,24 +168,24 @@ public class MinimobView extends MinimobBaseView
         //load the ad to the container (
         _webView = loadMinimobWebView(_webView, _activity, this._minimobScript, isInterstitial, isFullScreen, isVideo);
 
-        MinimobViewLog.d("log level = " + MinimobViewLog.getLoggingLevel());
-        if (MinimobViewLog.getLoggingLevel() == MinimobViewLog.LOG_LEVEL.debug)
+        MinimobLog.d("log level = " + MinimobLog.getLoggingLevel());
+        if (MinimobLog.getLoggingLevel() == MinimobLog.LOG_LEVEL.debug)
         {
             injectJavaScript(_webView, "mmji.logLevel = mmji.LOG_LEVEL.DEBUG;");
         }
-        else if (MinimobViewLog.getLoggingLevel() == MinimobViewLog.LOG_LEVEL.info)
+        else if (MinimobLog.getLoggingLevel() == MinimobLog.LOG_LEVEL.info)
         {
             injectJavaScript(_webView, "mmji.logLevel = mmji.LOG_LEVEL.INFO;");
         }
-        else if (MinimobViewLog.getLoggingLevel() == MinimobViewLog.LOG_LEVEL.warning)
+        else if (MinimobLog.getLoggingLevel() == MinimobLog.LOG_LEVEL.warning)
         {
             injectJavaScript(_webView, "mmji.logLevel = mmji.LOG_LEVEL.WARNING;");
         }
-        else if (MinimobViewLog.getLoggingLevel() == MinimobViewLog.LOG_LEVEL.error)
+        else if (MinimobLog.getLoggingLevel() == MinimobLog.LOG_LEVEL.error)
         {
             injectJavaScript(_webView, "mmji.logLevel = mmji.LOG_LEVEL.ERROR;");
         }
-        else if (MinimobViewLog.getLoggingLevel() == MinimobViewLog.LOG_LEVEL.none)
+        else if (MinimobLog.getLoggingLevel() == MinimobLog.LOG_LEVEL.none)
         {
             injectJavaScript(_webView, "mmji.logLevel = mmji.LOG_LEVEL.NONE;");
         }
@@ -215,7 +214,7 @@ public class MinimobView extends MinimobBaseView
             public void onConfigurationChanged(Configuration newConfig)
             {
                 super.onConfigurationChanged(newConfig);
-                MinimobViewLog.d(TAG, "onConfigurationChanged " + (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT ? "portrait" : "landscape"));
+                MinimobLog.d(TAG, "onConfigurationChanged " + (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT ? "portrait" : "landscape"));
 
                 if (_isInterstitial)
                 {
@@ -228,7 +227,7 @@ public class MinimobView extends MinimobBaseView
             {
                 super.onWindowVisibilityChanged(visibility);
                 int actualVisibility = getVisibility();
-                MinimobViewLog.d(TAG, "onWindowVisibilityChanged " + getVisibilityString(visibility) + " (actual " + getVisibilityString(actualVisibility) + ")");
+                MinimobLog.d(TAG, "onWindowVisibilityChanged " + getVisibilityString(visibility) + " (actual " + getVisibilityString(actualVisibility) + ")");
 
                 if (visibility != View.VISIBLE)
                 {
@@ -349,7 +348,7 @@ public class MinimobView extends MinimobBaseView
     //region JS callback Methods
     private void parseCommandUrl(String commandUrl)
     {
-        MinimobViewLog.d(TAG, "parseCommandUrl " + commandUrl);
+        MinimobLog.d(TAG, "parseCommandUrl " + commandUrl);
 
         MinimobViewCommandParser parser = new MinimobViewCommandParser();
         Map<String, String> commandMap = parser.parseCommandUrl(commandUrl);
@@ -402,25 +401,25 @@ public class MinimobView extends MinimobBaseView
 
     private void adsReady()
     {
-        MinimobViewLog.d(TAG + "-" + "JS callback", "adsReady");
+        MinimobLog.d(TAG + "-" + "JS callback", "adsReady");
         _minimobViewListener.onAdsAvailable(MinimobView.this, "");
     }
 
     private void adsReady(String packageId)
     {
-        MinimobViewLog.d(TAG + "-" + "JS callback", "adsReady");
+        MinimobLog.d(TAG + "-" + "JS callback", "adsReady");
         _minimobViewListener.onAdsAvailable(MinimobView.this, packageId);
     }
 
     private void noAds()
     {
-        MinimobViewLog.d(TAG + "-" + "JS callback", "noAds");
+        MinimobLog.d(TAG + "-" + "JS callback", "noAds");
         _minimobViewListener.onAdsNotAvailable(MinimobView.this);
     }
 
     private void close()
     {
-        MinimobViewLog.d(TAG + "-" + "JS callback", "close");
+        MinimobLog.d(TAG + "-" + "JS callback", "close");
         _handler.post(new Runnable()
         {
             @Override
@@ -440,7 +439,7 @@ public class MinimobView extends MinimobBaseView
 
     private void videoFinished()
     {
-        MinimobViewLog.d(TAG + "-" + "JS callback", "videoFinished");
+        MinimobLog.d(TAG + "-" + "JS callback", "videoFinished");
         _minimobViewListener.onVideoFinished(MinimobView.this);
     }
 
@@ -448,7 +447,7 @@ public class MinimobView extends MinimobBaseView
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void expand(String url)
     {
-        MinimobViewLog.d(TAG + "-" + "JS callback", "expand " + (url != null ? url : "(1-part)"));
+        MinimobLog.d(TAG + "-" + "JS callback", "expand " + (url != null ? url : "(1-part)"));
 
         // The only time it is valid to call expand on a banner ad is
         // when the ad is currently in either default or resized state.
@@ -522,7 +521,7 @@ public class MinimobView extends MinimobBaseView
                 }
                 else
                 {
-                    MinimobViewLog.e("Could not load part 2 expanded content for URL: " + finalUrl);
+                    MinimobLog.e("Could not load part 2 expanded content for URL: " + finalUrl);
                 }
             }
         }, "2-part-content")).start();
@@ -533,7 +532,7 @@ public class MinimobView extends MinimobBaseView
         {
             url = URLDecoder.decode(url, "UTF-8");
             final String urlStr = url;
-            MinimobViewLog.d(TAG + "-JS callback", "open " + url);
+            MinimobLog.d(TAG + "-JS callback", "open " + url);
 
             _activity.runOnUiThread(new Runnable()
             {
@@ -567,7 +566,7 @@ public class MinimobView extends MinimobBaseView
     //region Native to JS Methods
     private void fireResumeVideoEvent()
     {
-        MinimobViewLog.d(TAG, "fireResumeVideoEvent");
+        MinimobLog.d(TAG, "fireResumeVideoEvent");
         injectJavaScript("mmji.fireResumeVideoEvent();");
     }
     //endregion Native to JS Methods
@@ -588,10 +587,10 @@ public class MinimobView extends MinimobBaseView
         {
             HttpURLConnection conn = (HttpURLConnection) (new URL(url)).openConnection();
             int responseCode = conn.getResponseCode();
-            MinimobViewLog.d(TAG, "response code " + responseCode);
+            MinimobLog.d(TAG, "response code " + responseCode);
             if (responseCode == HttpURLConnection.HTTP_OK)
             {
-                MinimobViewLog.d(TAG, "getContentLength " + conn.getContentLength());
+                MinimobLog.d(TAG, "getContentLength " + conn.getContentLength());
                 is = conn.getInputStream();
                 byte[] buf = new byte[1500];
                 int count;
@@ -602,12 +601,12 @@ public class MinimobView extends MinimobBaseView
                     sb.append(data);
                 }
                 content = sb.toString();
-                MinimobViewLog.d(TAG, "getStringFromUrl ok, length=" + content.length());
+                MinimobLog.d(TAG, "getStringFromUrl ok, length=" + content.length());
             }
             conn.disconnect();
         } catch (IOException e)
         {
-            MinimobViewLog.e(TAG, "getStringFromUrl failed " + e.getLocalizedMessage());
+            MinimobLog.e(TAG, "getStringFromUrl failed " + e.getLocalizedMessage());
         } finally
         {
             try
@@ -647,14 +646,14 @@ public class MinimobView extends MinimobBaseView
                 reader.close();
             } catch (IOException e)
             {
-                MinimobViewLog.e("Error fetching file: " + e.getMessage());
+                MinimobLog.e("Error fetching file: " + e.getMessage());
             }
 
             return mLine.toString();
         }
         else
         {
-            MinimobViewLog.e("Unknown location to fetch file content");
+            MinimobLog.e("Unknown location to fetch file content");
         }
 
         return "";
@@ -754,14 +753,14 @@ public class MinimobView extends MinimobBaseView
     
     private void forceLandscape()
     {
-        MinimobViewLog.d(TAG, "forceLandscape");
+        MinimobLog.d(TAG, "forceLandscape");
         _activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void forceFullScreen()
     {
-        MinimobViewLog.d(TAG, "forceFullScreen");
+        MinimobLog.d(TAG, "forceFullScreen");
 
         // store away the original state
         int flags = _activity.getWindow().getAttributes().flags;
@@ -802,10 +801,10 @@ public class MinimobView extends MinimobBaseView
             }
         }
 
-        MinimobViewLog.d(TAG, "isFullScreen " + _isFullScreen);
-        MinimobViewLog.d(TAG, "isForceNotFullScreen " + _isForceNotFullScreen);
-        MinimobViewLog.d(TAG, "isActionBarShowing " + _isActionBarShowing);
-        MinimobViewLog.d(TAG, "origTitleBarVisibility " + getVisibilityString(_origTitleBarVisibility));
+        MinimobLog.d(TAG, "isFullScreen " + _isFullScreen);
+        MinimobLog.d(TAG, "isForceNotFullScreen " + _isForceNotFullScreen);
+        MinimobLog.d(TAG, "isActionBarShowing " + _isActionBarShowing);
+        MinimobLog.d(TAG, "origTitleBarVisibility " + getVisibilityString(_origTitleBarVisibility));
 
         // force fullscreen mode
         _activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -844,7 +843,7 @@ public class MinimobView extends MinimobBaseView
 
     private void restoreOriginalOrientation()
     {
-        MinimobViewLog.d(TAG, "restoreOriginalOrientation");
+        MinimobLog.d(TAG, "restoreOriginalOrientation");
         _activity.setRequestedOrientation(_originalOrientation);
     }
 
@@ -886,16 +885,16 @@ public class MinimobView extends MinimobBaseView
     private void onLayoutWebView(MinimobWebView wv, boolean changed, int left, int top, int right, int bottom)
     {
         boolean isCurrent = (wv == _currentWebView);
-        MinimobViewLog.w(TAG, "onLayoutWebView " + (wv == _webView ? "1 " : "2 ") + isCurrent + " (" + _state + ") " +
+        MinimobLog.w(TAG, "onLayoutWebView " + (wv == _webView ? "1 " : "2 ") + isCurrent + " (" + _state + ") " +
                 changed + " " + left + " " + top + " " + right + " " + bottom);
         if (!isCurrent)
         {
-            MinimobViewLog.d(TAG, "onLayoutWebView ignored, not current");
+            MinimobLog.d(TAG, "onLayoutWebView ignored, not current");
             return;
         }
         if (_isForcingFullScreen)
         {
-            MinimobViewLog.d(TAG, "onLayoutWebView ignored, isForcingFullScreen");
+            MinimobLog.d(TAG, "onLayoutWebView ignored, isForcingFullScreen");
             _isForcingFullScreen = false;
             return;
         }
@@ -926,7 +925,7 @@ public class MinimobView extends MinimobBaseView
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void pauseWebView(MinimobWebView webView)
     {
-        MinimobViewLog.d(TAG, "pauseWebView " + webView.toString());
+        MinimobLog.d(TAG, "pauseWebView " + webView.toString());
         // Stop any video/animation that may be running in the WebView.
         // Otherwise, it will keep playing in the background.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
@@ -942,7 +941,7 @@ public class MinimobView extends MinimobBaseView
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void resumeWebView(MinimobWebView webView)
     {
-        MinimobViewLog.d(TAG, "resumeWebView " + webView.toString());
+        MinimobLog.d(TAG, "resumeWebView " + webView.toString());
         // Resume any video/animation that was running in the WebView.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
         {
@@ -962,7 +961,7 @@ public class MinimobView extends MinimobBaseView
             byte[] minimobJSInterfaceBytes = Base64.decode(str, Base64.DEFAULT);
             _minimobJSInterface = new String(minimobJSInterfaceBytes);
         }
-        MinimobViewLog.d(TAG, "injectMinimobJSInterface ok " + _minimobJSInterface.length());
+        MinimobLog.d(TAG, "injectMinimobJSInterface ok " + _minimobJSInterface.length());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
         {
             wv.loadData("<html></html>", "text/html", "UTF-8");
@@ -993,19 +992,19 @@ public class MinimobView extends MinimobBaseView
         {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
             {
-                MinimobViewLog.d(TAG, "evaluating js: " + js);
+                MinimobLog.d(TAG, "evaluating js: " + js);
                 webView.evaluateJavascript(js, new ValueCallback<String>()
                 {
                     @Override
                     public void onReceiveValue(String value)
                     {
-						MinimobViewLog.d(TAG, "evaluate js complete: "+value);
+						MinimobLog.d(TAG, "evaluate js complete: "+value);
                     }
                 });
             }
             else
             {
-                MinimobViewLog.d(TAG, "loading url: " + js);
+                MinimobLog.d(TAG, "loading url: " + js);
                 webView.loadUrl("javascript:" + js);
             }
         }
@@ -1025,7 +1024,7 @@ public class MinimobView extends MinimobBaseView
         // make the container of the webview visible
         ((View) minimobWebView.getParent()).setVisibility(visibility);
 
-        Log.i(TAG, "MinimobWebView with id:" + minimobWebView.getWebViewId() + " is " + (visible ? "visible" : "gone"));
+        MinimobLog.i(TAG, "MinimobWebView with id:" + minimobWebView.getWebViewId() + " is " + (visible ? "visible" : "gone"));
     }
     //endregion HELPERS
 
@@ -1041,7 +1040,7 @@ public class MinimobView extends MinimobBaseView
 
             // load url
             minimobWebView.loadDataWithBaseURL(baseUrl, html, "text/html", "utf-8", null);
-            Log.d(TAG + "-" + "loadMinimobWebView", "Loaded the url to webView with webViewId " + minimobWebView.getWebViewId());
+            MinimobLog.d(TAG + "-" + "loadMinimobWebView", "Loaded the url to webView with webViewId " + minimobWebView.getWebViewId());
         }
 
         return minimobWebView;
@@ -1091,7 +1090,7 @@ public class MinimobView extends MinimobBaseView
         catch (Exception ex)
         {
             ex.printStackTrace();
-            Log.e(TAG + "-" + "generateHtml", ex.getMessage());
+            MinimobLog.e(TAG + "-" + "generateHtml", ex.getMessage());
         }
 
         return processedHtml.toString();
@@ -1107,7 +1106,7 @@ public class MinimobView extends MinimobBaseView
         catch (Exception ex)
         {
             ex.printStackTrace();
-            Log.e(TAG + "-" + "setAdTagSettings", ex.getMessage());
+            MinimobLog.e(TAG + "-" + "setAdTagSettings", ex.getMessage());
         }
 
         return minimobScript;
@@ -1128,7 +1127,7 @@ public class MinimobView extends MinimobBaseView
         catch (Exception ex)
         {
             ex.printStackTrace();
-            Log.e(TAG + "-" + "setAdTagSetting", ex.getMessage());
+            MinimobLog.e(TAG + "-" + "setAdTagSetting", ex.getMessage());
         }
         return text;
     }
@@ -1154,7 +1153,7 @@ public class MinimobView extends MinimobBaseView
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url)
         {
-            MinimobViewLog.d(TAG, "shouldOverrideUrlLoading: " + url);
+            MinimobLog.d(TAG, "shouldOverrideUrlLoading: " + url);
             if (url.startsWith("mmji://"))
             {
                 parseCommandUrl(url);

@@ -6,7 +6,7 @@ import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
-import com.minimob.adserving.helpers.MinimobViewLog;
+import com.minimob.adserving.helpers.MinimobLog;
 import com.minimob.adserving.interfaces.IMinimobWebViewLoadedListener;
 
 /**
@@ -14,7 +14,7 @@ import com.minimob.adserving.interfaces.IMinimobWebViewLoadedListener;
  */
 public class MinimobWebChromeClient extends WebChromeClient
 {
-    private static String TAG = "MINIMOB-" + MinimobWebChromeClient.class.getSimpleName();
+    private static String TAG = MinimobWebChromeClient.class.getSimpleName();
     IMinimobWebViewLoadedListener _minimobWebViewLoadedListener;
 
     public MinimobWebChromeClient()
@@ -35,9 +35,9 @@ public class MinimobWebChromeClient extends WebChromeClient
         }
         if (!cm.message().contains("Uncaught ReferenceError"))
         {
-            MinimobViewLog.i("JS console", cm.message()
+            MinimobLog.i("JS console", cm.message()
                     + (cm.sourceId() == null ? "" : " at " + cm.sourceId())
-                    + ":" + cm.lineNumber());
+                    + " @line " + cm.lineNumber());
         }
         return true;
     }
@@ -45,14 +45,14 @@ public class MinimobWebChromeClient extends WebChromeClient
     @Override
     public boolean onJsConfirm(WebView view, String url, String message, JsResult result)
     {
-        MinimobViewLog.d(TAG + "-" + "JS confirm", message);
+        MinimobLog.d(TAG + "-" + "JS confirm", message);
         return handlePopups(result);
     }
 
     @Override
     public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, JsPromptResult result)
     {
-        MinimobViewLog.d(TAG + "-" + "JS prompt", message);
+        MinimobLog.d(TAG + "-" + "JS prompt", message);
         return handlePopups(result);
     }
 

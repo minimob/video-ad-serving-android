@@ -11,12 +11,10 @@ import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
-import android.webkit.WebView;
 
-import com.minimob.adserving.helpers.MinimobHelper;
+import com.minimob.adserving.helpers.MinimobLog;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -27,7 +25,7 @@ import java.security.NoSuchAlgorithmException;
 public class AdTag
 {
     //region VARIABLES
-    private String TAG = "MINIMOB-" + AdTag.class.getSimpleName();
+    private String TAG = AdTag.class.getSimpleName();
     
     private String _adTag;
     private Context _context;
@@ -107,7 +105,7 @@ public class AdTag
         catch (Exception ex)
         {
             ex.printStackTrace();
-            Log.e(TAG + "-" + "setAdTagSettings", ex.getMessage());
+            MinimobLog.e(TAG + "-" + "setAdTagSettings", ex.getMessage());
         }
     }
 
@@ -126,7 +124,7 @@ public class AdTag
         catch (Exception ex)
         {
             ex.printStackTrace();
-            Log.e(TAG + "-" + "setAdTagSetting", ex.getMessage());
+            MinimobLog.e(TAG + "-" + "setAdTagSetting", ex.getMessage());
         }
         return text;
     }
@@ -142,7 +140,7 @@ public class AdTag
         catch (Exception ex)
         {
             ex.printStackTrace();
-            Log.e(TAG + "-" + "checkWifiConnectivity", ex.getMessage());
+            MinimobLog.e(TAG + "-" + "checkWifiConnectivity", ex.getMessage());
         }
         return false;
     }
@@ -167,7 +165,7 @@ public class AdTag
         catch (Exception ex)
         {
             ex.printStackTrace();
-            Log.e(TAG + "-" + "getMCC", ex.getMessage());
+            MinimobLog.e(TAG + "-" + "getMCC", ex.getMessage());
         }
         return mnc;
     }
@@ -192,7 +190,7 @@ public class AdTag
         catch (Exception ex)
         {
             ex.printStackTrace();
-            Log.e(TAG + "-" + "getMCC", ex.getMessage());
+            MinimobLog.e(TAG + "-" + "getMCC", ex.getMessage());
         }
 
         return mcc;
@@ -213,7 +211,7 @@ public class AdTag
         catch (Exception ex)
         {
             ex.printStackTrace();
-            Log.e(TAG + "-" + "getIMEI", ex.getMessage());
+            MinimobLog.e(TAG + "-" + "getIMEI", ex.getMessage());
         }
         return this.getMD5(imei);
     }
@@ -326,7 +324,7 @@ public class AdTag
         catch (NoSuchAlgorithmException ex)
         {
             ex.printStackTrace();
-            Log.e(TAG + "-" + "getMD5", ex.getMessage());
+            MinimobLog.e(TAG + "-" + "getMD5", ex.getMessage());
         }
         return "";
     }

@@ -2,7 +2,6 @@ package com.minimob.adserving.controllers;
 
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.minimob.adserving.adzones.AdTag;
 import com.minimob.adserving.adzones.AdZone;
@@ -10,6 +9,7 @@ import com.minimob.adserving.adzones.AdZoneVideo;
 import com.minimob.adserving.adzones.AdZoneVideoPreloaded;
 import com.minimob.adserving.helpers.AdZoneType;
 import com.minimob.adserving.helpers.AdvertisingIdClient;
+import com.minimob.adserving.helpers.MinimobLog;
 import com.minimob.adserving.interfaces.IAdZoneCompleted;
 import com.minimob.adserving.interfaces.IAdZoneCreatedListener;
 import com.minimob.adserving.views.MinimobBaseActivity;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MinimobAdController {
-    private String TAG = "MINIMOB-" + MinimobAdController.class.getSimpleName();
+    private String TAG = MinimobAdController.class.getSimpleName();
     private static final MinimobAdController _instance = new MinimobAdController();
     private final Map<Integer, AdZone> _dictionary;
     private Integer _originalOrientation;
@@ -83,7 +83,7 @@ public class MinimobAdController {
                         // the old version of the service doesn't support getting AdvertisingId).
                         gaid = "";
                         ex.printStackTrace();
-                        Log.e(TAG + "-" + "getGAID", ex.getMessage());
+                        MinimobLog.e(TAG + "-" + "getGAID", ex.getMessage());
                     }
                     finally
                     {
@@ -185,7 +185,7 @@ public class MinimobAdController {
                         // the old version of the service doesn't support getting AdvertisingId).
                         gaid = "";
                         ex.printStackTrace();
-                        Log.e(TAG + "-" + "getGAID", ex.getMessage());
+                        MinimobLog.e(TAG + "-" + "getGAID", ex.getMessage());
                     }
                     finally
                     {

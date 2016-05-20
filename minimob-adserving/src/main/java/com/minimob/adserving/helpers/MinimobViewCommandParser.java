@@ -18,7 +18,7 @@ public class MinimobViewCommandParser
         // We need to parse out the command and create a map containing it and
         // its the parameters and their associated values.
 
-        MinimobViewLog.d(TAG, "parseCommandUrl " + commandUrl);
+        MinimobLog.d(TAG, "parseCommandUrl " + commandUrl);
 
         // Remove mmji:// prefix.
         String s = commandUrl.substring("mmji://".length());
@@ -50,14 +50,14 @@ public class MinimobViewCommandParser
         // Check for valid command.
         if (!isValidCommand(command))
         {
-            MinimobViewLog.w(TAG + "-" + "command " + command + " is unknown");
+            MinimobLog.w(TAG + "-" + "command " + command + " is unknown");
             return null;
         }
 
         // Check for valid parameters for the given command.
         if (!checkParamsForCommand(command, params))
         {
-            MinimobViewLog.w(TAG + "-" + "command URL " + commandUrl + " is missing parameters");
+            MinimobLog.w(TAG + "-" + "command URL " + commandUrl + " is missing parameters");
             return null;
         }
 
