@@ -33,7 +33,7 @@
 <ul>
     <li>At the <strong>build.gradle</strong> script file of your <em>app module</em>, add the following line in the <strong>dependencies</strong> block:</li>
 <pre class="prettyprint linenums">
-<code>compile 'com.github.minimob:video-ad-serving:1.0.26'
+<code>compile 'com.github.minimob:video-ad-serving:1.0.28'
 </code>
 </pre>
     <li>At the <strong>build.gradle</strong> script file of your <em>project</em>, add the following line in the <strong>repositories</strong> block:</li>
@@ -56,7 +56,7 @@
 <ul>
     <li>At the <strong>build.gradle</strong> script file of your <em>app module</em>, add the following line in the <strong>dependencies</strong> block:</li>
 <pre class="prettyprint linenums">
-<code>compile 'com.minimob.adserving:minimob-adserving:1.0.26'
+<code>compile 'com.minimob.adserving:minimob-adserving:1.0.28'
 </code>
 </pre>
 </ul>
