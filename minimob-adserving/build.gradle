@@ -8,15 +8,21 @@
 
 apply plugin: 'com.android.library'
 
+//get parameters from local.properties
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def property_versionCode = properties.getProperty('versionCode')
+def property_versionName = properties.getProperty('versionName')
+
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.2'
+    compileSdkVersion 24
+    buildToolsVersion '24.0.1'
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 23
-        versionCode 26
-        versionName "1.0.26"
+        targetSdkVersion 24
+        versionCode Integer.parseInt(property_versionCode)
+        versionName property_versionName
     }
     buildTypes {
         release {
@@ -29,15 +35,11 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'com.android.support:support-v4:24.1.1'
 }
 
 //REGION for bintray upload (maven repo) USING nuuneoi's library
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-def property_versionName = properties.getProperty('versionName')
-
 ext {
     bintrayRepo = 'maven'
     bintrayName = 'minimob-adserving'
@@ -65,7 +67,7 @@ ext {
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
 
-//REGION for bintray upload (maven repo) USING nuuneoi's library
+//ENDREGION for bintray upload (maven repo) USING nuuneoi's library
 
 
 ////REGION for bintray upload (maven repo) NOT USING nuuneoi's library
@@ -146,4 +148,4 @@ apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.
 ////    }
 ////}
 //
-////REGION for bintray upload (maven repo) NOT USING nuuneoi's library
+////ENDREGION for bintray upload (maven repo) NOT USING nuuneoi's library

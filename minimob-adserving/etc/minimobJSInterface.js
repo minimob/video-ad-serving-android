@@ -85,6 +85,11 @@
         videoHandler.play();
     };
 
+    mmji.videoFinished = function() {
+        log.i("mmji.videoFinished");
+        callNative("videoFinished");
+    };
+
 	/***************************************************************************
 	 * internal helper methods
 	 **************************************************************************/

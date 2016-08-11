@@ -74,6 +74,7 @@ public class MinimobViewCommandParser
                 "adsReady",
                 "noAds",
                 "expand",
+                "videoFinished",
         };
         return (Arrays.asList(commands).contains(command));
     }
