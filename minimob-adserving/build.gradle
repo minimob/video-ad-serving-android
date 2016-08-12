@@ -14,6 +14,14 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 def property_versionCode = properties.getProperty('versionCode')
 def property_versionName = properties.getProperty('versionName')
 
+// when local.properties does not have these properties
+if (property_versionCode == null) {
+    property_versionCode = "0"
+}
+if (property_versionName == null) {
+    property_versionName = "1.0"
+}
+
 android {
     compileSdkVersion 24
     buildToolsVersion '24.0.1'
