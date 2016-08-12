@@ -15,9 +15,16 @@
 <h3>Workflow overview</h3>
    <p>When developing your app, you need to carry out the following tasks:</p>
 <ol>
+    <li>Update the app’s manifest file</li>
     <li>Import the Minimob ad-serving module to your project</li>
     <li>Use the imported module for requesting, loading and displaying video ads from Minimob </li>
 </ol>
+<h3>Updating the app’s manifest file</h3>
+   <p>At the app’s <code>AndroidManifest.xml</code> file, add the following line in the <code>&lt;application&gt;</code> node (it enables hardware-accelerated rendering for all activities and views in the application):</p>
+<pre class="prettyprint linenums">
+<code>android:hardwareAccelerated="true"
+</code>
+</pre>
 <h3>Importing the Minimob ad-serving module to your project</h3>
    <p>You can import the required Minimob ad-serving module either from the source code or from online repositories.</p>
 <h5>Importing the source code</h5>
