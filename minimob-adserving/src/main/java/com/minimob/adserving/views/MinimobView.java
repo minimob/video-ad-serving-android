@@ -758,7 +758,7 @@ public class MinimobView extends MinimobBaseView
     private void forceLandscape()
     {
         MinimobLog.d(TAG, "forceLandscape");
-        _activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        _activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
