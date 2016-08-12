@@ -21,7 +21,7 @@ public class AdZoneVideo extends AdZone implements IMinimobViewListener
     //region VARIABLES
     private static final String TAG = AdZoneVideo.class.getSimpleName();
 
-    private final Object _criticalSection = new Object();
+    private final Object _lockObject = new Object();
     private State _state;
 
     //region Listeners
@@ -37,7 +37,8 @@ public class AdZoneVideo extends AdZone implements IMinimobViewListener
         SHOW,
         ADS_AVAILABLE,
         ADS_NOT_AVAILABLE,
-        CLOSE
+        CLOSE,
+        FINISH
     }
 
     public enum State
@@ -47,7 +48,7 @@ public class AdZoneVideo extends AdZone implements IMinimobViewListener
             @Override
             State doAction(Event event, AdZoneVideo adZone)
             {
-                synchronized (adZone._criticalSection)
+                synchronized (adZone._lockObject)
                 {
                     if (event == Event.SHOW)
                     {
@@ -78,7 +79,7 @@ public class AdZoneVideo extends AdZone implements IMinimobViewListener
             @Override
             State doAction(Event event, AdZoneVideo adZone)
             {
-                synchronized (adZone._criticalSection)
+                synchronized (adZone._lockObject)
                 {
                     if (event == Event.SHOW)
                     {
@@ -109,24 +110,23 @@ public class AdZoneVideo extends AdZone implements IMinimobViewListener
             @Override
             State doAction(Event event, AdZoneVideo adZone)
             {
-                synchronized (adZone._criticalSection)
+                synchronized (adZone._lockObject)
                 {
-                    if (event == Event.SHOW)
-                    {
+                    if (event == Event.SHOW) {
                         return PLAYING;
                     }
-                    else if (event == Event.ADS_AVAILABLE)
-                    {
+                    else if (event == Event.ADS_AVAILABLE) {
                         return PLAYING;
                     }
-                    else if (event == Event.ADS_NOT_AVAILABLE)
-                    {
+                    else if (event == Event.ADS_NOT_AVAILABLE) {
                         return PLAYING;
                     }
-                    else if (event == Event.CLOSE)
-                    {
+                    else if (event == Event.CLOSE) {
                         adZone._destroy();
                         return INITIAL;
+                    }
+                    else if (event == Event.FINISH) {
+                        return FINISHED;
                     }
 
                     return PLAYING;
@@ -138,8 +138,12 @@ public class AdZoneVideo extends AdZone implements IMinimobViewListener
         @Override
         State doAction(Event event, AdZoneVideo adZone)
         {
-            synchronized (adZone._criticalSection)
+            synchronized (adZone._lockObject)
             {
+                if (event == Event.CLOSE) {
+                    adZone._destroy();
+                }
+
                 if (adZone._adZoneCompletedListener != null)
                 {
                     adZone._adZoneCompletedListener.onAdZoneCompleted(adZone.Id());
@@ -189,7 +193,7 @@ public class AdZoneVideo extends AdZone implements IMinimobViewListener
 
     public State getState()
     {
-        synchronized (this._criticalSection)
+        synchronized (this._lockObject)
         {
             return this._state;
         }
@@ -324,7 +328,7 @@ public class AdZoneVideo extends AdZone implements IMinimobViewListener
     public void onVideoFinished(MinimobBaseView minimobBaseView)
     {
         MinimobHelper.getInstance().logMessage(TAG + "-" + IMinimobViewListener.class.getSimpleName(), "onVideoFinished");
-        this._state = this._state.doAction(Event.CLOSE, this);
+        this._state = this._state.doAction(Event.FINISH, this);
 
         if (this._videoFinishedListener != null)
         {

@@ -25,7 +25,7 @@ public class AdZoneVideoPreloaded extends AdZone implements IMinimobViewListener
     //region VARIABLES
     private static final String TAG = AdZoneVideoPreloaded.class.getSimpleName();
 
-    private final Object _criticalSection = new Object();
+    private final Object _lockObject = new Object();
     private State _state;
     private Date _dateLoaded;
 
@@ -45,7 +45,8 @@ public class AdZoneVideoPreloaded extends AdZone implements IMinimobViewListener
         SHOW,
         ADS_AVAILABLE,
         ADS_NOT_AVAILABLE,
-        CLOSE
+        CLOSE,
+        FINISH
     }
 
     public enum State
@@ -55,7 +56,7 @@ public class AdZoneVideoPreloaded extends AdZone implements IMinimobViewListener
             @Override
             State doAction(Event event, AdZoneVideoPreloaded adZone)
             {
-                synchronized (adZone._criticalSection)
+                synchronized (adZone._lockObject)
                 {
                     if (event == Event.LOAD) {
                         adZone._load();
@@ -81,7 +82,7 @@ public class AdZoneVideoPreloaded extends AdZone implements IMinimobViewListener
             @Override
             State doAction(Event event, final AdZoneVideoPreloaded adZone)
             {
-                synchronized (adZone._criticalSection)
+                synchronized (adZone._lockObject)
                 {
                     if (event == Event.LOAD) {
                         if (adZone._videoLoadingListener != null) {
@@ -123,7 +124,7 @@ public class AdZoneVideoPreloaded extends AdZone implements IMinimobViewListener
             @Override
             State doAction(Event event, AdZoneVideoPreloaded adZone)
             {
-                synchronized (adZone._criticalSection)
+                synchronized (adZone._lockObject)
                 {
                     if (event == Event.LOAD) {
                         boolean isVideoOutdated = adZone._isVideoOutdated();
@@ -161,7 +162,7 @@ public class AdZoneVideoPreloaded extends AdZone implements IMinimobViewListener
             @Override
             State doAction(Event event, AdZoneVideoPreloaded adZone)
             {
-                synchronized (adZone._criticalSection)
+                synchronized (adZone._lockObject)
                 {
                     if (event == Event.LOAD) {
                         return PLAYING;
@@ -174,6 +175,8 @@ public class AdZoneVideoPreloaded extends AdZone implements IMinimobViewListener
                     } else if (event == Event.CLOSE) {
                         adZone._destroy();
                         return FINISHED;
+                    } else if (event == Event.FINISH) {
+                        return FINISHED;
                     }
 
                     return PLAYING;
@@ -185,8 +188,12 @@ public class AdZoneVideoPreloaded extends AdZone implements IMinimobViewListener
             @Override
             State doAction(Event event, AdZoneVideoPreloaded adZone)
             {
-                synchronized (adZone._criticalSection)
+                synchronized (adZone._lockObject)
                 {
+                    if (event == Event.CLOSE) {
+                        adZone._destroy();
+                    }
+
                     if (adZone._adZoneCompletedListener != null)
                     {
                         adZone._adZoneCompletedListener.onAdZoneCompleted(adZone.Id());
@@ -244,7 +251,7 @@ public class AdZoneVideoPreloaded extends AdZone implements IMinimobViewListener
     public State getState()
     {
         State state;
-        synchronized (this._criticalSection)
+        synchronized (this._lockObject)
         {
             state = this._state;
         }
@@ -459,7 +466,7 @@ public class AdZoneVideoPreloaded extends AdZone implements IMinimobViewListener
     public void onVideoFinished(MinimobBaseView minimobBaseView)
     {
         MinimobHelper.getInstance().logMessage(TAG + "-" + IMinimobViewListener.class.getSimpleName(), "onVideoFinished");
-        this._state = this._state.doAction(Event.CLOSE, this);
+        this._state = this._state.doAction(Event.FINISH, this);
 
         if (this._videoFinishedListener != null)
         {
