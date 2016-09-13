@@ -70,6 +70,7 @@ public class MinimobViewCommandParser
     private boolean isValidCommand(String command)
     {
         final String[] commands = {
+                "closeIsVisible",
                 "close",
                 "adsReady",
                 "noAds",

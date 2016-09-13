@@ -51,6 +51,11 @@
 	 * callbacks to Native code
 	 **************************************************************************/
 
+    mmji.closeIsVisible = function() {
+		log.i("mmji.closeIsVisible");
+		callNative("closeIsVisible");
+	};
+
 	mmji.close = function() {
 		log.i("mmji.close");
 		callNative("close");

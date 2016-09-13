@@ -29,7 +29,9 @@ public class VideoActivity extends MinimobBaseActivity
     @Override
     public void onBackPressed()
     {
-        // do nothing
+        if (_minimobView.IsCloseVisible()) {
+           _minimobView.closeVideo();
+        }
     }
 
     @Override
