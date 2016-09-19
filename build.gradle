@@ -7,10 +7,10 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.3'
 
-        //for bintray upload (maven repo) USING nuuneoi's library
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
-        //for bintray upload (maven repo) USING nuuneoi's library
+//        //REGION for bintray upload (maven repo) USING nuuneoi's library
+//        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
+//        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
+//        //ENDREGION for bintray upload (maven repo) USING nuuneoi's library
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

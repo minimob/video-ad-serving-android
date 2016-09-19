@@ -1,6 +1,6 @@
 ////REGION for bintray upload (maven repo) NOT USING nuuneoi's library
 //plugins {
-//    id "com.jfrog.bintray" version "1.6"
+//    id "com.jfrog.bintray" version "1.7"
 //}
 //apply plugin: 'com.jfrog.bintray'
 //apply plugin: 'maven'
@@ -13,6 +13,11 @@ Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 def property_versionCode = properties.getProperty('versionCode')
 def property_versionName = properties.getProperty('versionName')
+////REGION Properties for BinTray
+//def property_bintray_user = properties.getProperty('bintray.user')
+//def property_bintray_apikey = properties.getProperty('bintray.apikey')
+//def property_bintray_gpg_password = properties.getProperty('bintray.gpg.password')
+////ENDREGION Properties for BinTray
 
 // when local.properties does not have these properties
 if (property_versionCode == null) {
@@ -47,48 +52,39 @@ dependencies {
     compile 'com.android.support:support-v4:24.2.1'
 }
 
-//REGION for bintray upload (maven repo) USING nuuneoi's library
-ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'minimob-adserving'
-
-    publishedGroupId = 'com.minimob.adserving'
-    libraryName = 'MinimobAdServing'
-    artifact = 'minimob-adserving'
-
-    libraryDescription = 'Video ads integration library'
-
-    siteUrl = 'https://github.com/minimob/video-ad-serving'
-    gitUrl = 'https://github.com/minimob/video-ad-serving.git'
-
-    libraryVersion = property_versionName
-
-    developerId = 'minimob'
-    developerName = 'Minimob Developer'
-    developerEmail = 'minimob.developer@gmail.com'
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
-}
-
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
-
-//ENDREGION for bintray upload (maven repo) USING nuuneoi's library
+////REGION for bintray upload (maven repo) USING nuuneoi's library
+//ext {
+//    bintrayRepo = 'maven'
+//    bintrayName = 'minimob-adserving'
+//
+//    publishedGroupId = 'com.minimob.adserving'
+//    libraryName = 'MinimobAdServing'
+//    artifact = 'minimob-adserving'
+//
+//    libraryDescription = 'Video ads integration library'
+//
+//    siteUrl = 'https://github.com/minimob/video-ad-serving'
+//    gitUrl = 'https://github.com/minimob/video-ad-serving.git'
+//
+//    libraryVersion = property_versionName
+//
+//    developerId = 'minimob'
+//    developerName = 'Minimob Developer'
+//    developerEmail = 'minimob.developer@gmail.com'
+//
+//    licenseName = 'The Apache Software License, Version 2.0'
+//    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//    allLicenses = ["Apache-2.0"]
+//}
+//
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+//
+////ENDREGION for bintray upload (maven repo) USING nuuneoi's library
 
 
 ////REGION for bintray upload (maven repo) NOT USING nuuneoi's library
-////get parameters from local.properties
-//Properties properties = new Properties()
-//properties.load(project.rootProject.file('local.properties').newDataInputStream())
-//def bintray_user = properties.getProperty('bintray.user')
-//def bintray_apikey = properties.getProperty('bintray.apikey')
-//def bintray_gpg_password = properties.getProperty('bintray.gpg.password')
-//def versionName = properties.getProperty('versionName')
-//
-//version = versionName
-//
+//version = property_versionName
 //if (project.hasProperty("android")) { // Android libraries
 //    task sourcesJar(type: Jar) {
 //        classifier = 'sources'
@@ -117,8 +113,8 @@ apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.
 //}
 //
 //bintray {
-//    user = bintray_user
-//    key = bintray_apikey
+//    user = property_bintray_user
+//    key = property_bintray_apikey
 //    configurations = ['archives']
 ////    publications = ['MyMavenPublication']
 //
@@ -135,11 +131,11 @@ apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.
 //        //Optional version descriptor
 //        version {
 //            desc = 'Video ads integration library'
-//            vcsTag = versionName
+//            vcsTag = property_versionName
 //
 //            gpg {
 //                sign = true
-//                passphrase = bintray_gpg_password
+//                passphrase = property_bintray_gpg_password
 //            }
 //        }
 //    }
@@ -150,8 +146,8 @@ apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.
 ////        MyMavenPublication(MavenPublication) {
 ////            from components.java
 ////            groupId 'com.minimob.adserving'
-////            artifactId 'adserving'
-////            version "1.0.26"
+////            artifactId 'minimob-adserving'
+////            version property_versionName
 ////        }
 ////    }
 ////}
