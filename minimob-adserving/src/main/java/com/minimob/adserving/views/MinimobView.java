@@ -982,7 +982,7 @@ public class MinimobView extends MinimobBaseView
             byte[] minimobJSInterfaceBytes = Base64.decode(str, Base64.DEFAULT);
             _minimobJSInterface = new String(minimobJSInterfaceBytes);
         }
-        MinimobLog.d(TAG, "injectMinimobJSInterface ok " + _minimobJSInterface.length());
+        MinimobLog.d(TAG, "injectMinimobJSInterface ok! Length:" + _minimobJSInterface.length());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
         {
             wv.loadData("<html></html>", "text/html", "UTF-8");
@@ -994,10 +994,12 @@ public class MinimobView extends MinimobBaseView
 
                 }
             });
+            MinimobLog.d(TAG, "MINIMOBJSINTERFACE injected");
         }
         else
         {
             wv.loadUrl("javascript:" + _minimobJSInterface);
+            MinimobLog.d(TAG, "MINIMOBJSINTERFACE injected");
         }
     }
     @SuppressLint("NewApi")
