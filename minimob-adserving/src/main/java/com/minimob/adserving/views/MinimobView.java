@@ -982,25 +982,25 @@ public class MinimobView extends MinimobBaseView
             byte[] minimobJSInterfaceBytes = Base64.decode(str, Base64.DEFAULT);
             _minimobJSInterface = new String(minimobJSInterfaceBytes);
         }
-        MinimobLog.d(TAG, "injectMinimobJSInterface ok! Length:" + _minimobJSInterface.length());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
         {
             wv.loadData("<html></html>", "text/html", "UTF-8");
+            MinimobLog.d(TAG, "evaluating js: " + _minimobJSInterface);
             wv.evaluateJavascript(_minimobJSInterface, new ValueCallback<String>()
             {
                 @Override
                 public void onReceiveValue(String value)
                 {
-
+                    MinimobLog.d(TAG, "evaluate js complete: "+value);
                 }
             });
-            MinimobLog.d(TAG, "MINIMOBJSINTERFACE injected");
         }
         else
         {
+            MinimobLog.d(TAG, "loading url: " + _minimobJSInterface);
             wv.loadUrl("javascript:" + _minimobJSInterface);
-            MinimobLog.d(TAG, "MINIMOBJSINTERFACE injected");
         }
+        MinimobLog.d(TAG, "injectMinimobJSInterface ok! Length:" + _minimobJSInterface.length());
     }
     @SuppressLint("NewApi")
     private void injectJavaScript(String js)
