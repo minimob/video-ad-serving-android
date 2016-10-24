@@ -985,7 +985,7 @@ public class MinimobView extends MinimobBaseView
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
         {
             wv.loadData("<html></html>", "text/html", "UTF-8");
-            MinimobLog.d(TAG, "evaluating js: " + _minimobJSInterface);
+//            MinimobLog.d(TAG, "evaluating js: " + _minimobJSInterface);
             wv.evaluateJavascript(_minimobJSInterface, new ValueCallback<String>()
             {
                 @Override
